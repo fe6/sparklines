@@ -1,0 +1,47 @@
+{
+  "name": "@fe6/sparklines",
+  "version": "1.0.0",
+  "main": "dist/sparklines.js",
+  "unpkg": "dist/sparklines.js",
+  "license": "MIT",
+  "author": "李梦龙",
+  "scripts": {
+    "start": "rollup -wc rollup.config.js",
+    "eslint": "eslint --ext .tsx,.ts --fix ./src",
+    "prettier": "prettier --parser=typescript \"src/*.ts\" --write",
+    "build": "rm -rf dist && rollup -c rollup.config.js --environment NODE_ENV:production"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged",
+    "commit-msg": "node scripts/verifyCommit.js"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.ts?(x)": [
+      "yarn prettier",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.6.1",
+    "@typescript-eslint/parser": "^2.6.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-typescript": "^0.14.0",
+    "lint-staged": "^9.4.2",
+    "prettier": "^1.19.1",
+    "rollup": "^1.26.4",
+    "rollup-plugin-alias": "^2.2.0",
+    "rollup-plugin-eslint": "^7.0.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-terser": "^5.1.2",
+    "rollup-plugin-typescript2": "^0.25.2",
+    "typescript": "^3.7.2",
+    "yorkie": "^2.0.0"
+  }
+}

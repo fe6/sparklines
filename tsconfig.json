@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "ES5",                          /* 指定ECMAScript目标版本: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019' or 'ESNEXT'. */
+    "module": "ESNext",                          /* 指定模块代码生成: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */
+    "allowJs": false,                         /* 允许编译javascript文件. */
+    // "declaration": true,                   /* 生成相应的'.d.ts'文件. */
+    // "declarationMap": true,                /* 为每个相应的“ .d.ts”文件生成一个源映射. */
+    "sourceMap": false,
+    "outDir": "dist",                        /* 将输出结构重定向到目录. */
+    "rootDir": ".",                       /* 指定输入文件的根目录。 用于通过--outDir控制输出目录结构. */
+    // "removeComments": true,                /* 不发表评论输出. */
+
+    /* Strict Type-Checking Options */
+    "noImplicitAny": true,                 /* 在隐式“ any”类型的表达式和声明上引发错误. */
+    "strictNullChecks": true,              /* 启用严格的空检查. */
+    "noImplicitThis": true,                /* 使用隐含“ any”类型引发“ this”表达式的错误. */
+
+    /* Additional Checks */
+    "noUnusedLocals": true,                /* 报告未使用的本地错误. */
+    "noUnusedParameters": true,            /* 报告未使用参数的错误. */
+
+    /* Module Resolution Options */
+    "moduleResolution": "node",            /* 指定模块解析策略：“节点”（Node.js）或“经典”（TypeScript 1.6之前的版本）。 */
+    "baseUrl": ".",                       /* 基本目录解析非绝对模块名称. */
+    // "paths": {},                           /* 一系列条目将导入重新映射到相对于“ baseUrl”的查找位置. */
+    // "types": [],                           /* 类型声明文件包含在编译中. */
+    "esModuleInterop": true,                  /* 通过为所有导入创建名称空间对象，启用CommonJS和ES模块之间的发射互操作性。 暗示“ allowSyntheticDefaultImports”. */
+    "resolveJsonModule": true,
+
+    /* Experimental Options */
+    "experimentalDecorators": true,        /* 为ES7装饰器提供实验支持. */
+  },
+  "include": [
+    "src"
+  ]
+}
