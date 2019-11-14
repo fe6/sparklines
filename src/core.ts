@@ -2,6 +2,7 @@
 
 import { OptionsFace, optionsDefault } from './share/ast';
 import line from './line';
+import bar from './bar';
 
 const sparklines = (
   $el: Element,
@@ -13,6 +14,10 @@ const sparklines = (
 
   if (type === 'line') {
     line($el, opts);
+  }
+
+  if (type === 'bar') {
+    bar($el, opts);
   }
 };
 
