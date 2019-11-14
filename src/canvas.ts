@@ -1,4 +1,5 @@
 /** @format */
+import { isString } from './share/type';
 import {
   OptionsFace,
   optionsDefault,
@@ -19,11 +20,26 @@ export const calculateanvasSize = (
   options: OptionsFace = optionsDefault,
   isInit?: boolean,
 ): CalculateanvasSizeFace => {
-  const { width, height, defaultPixelsPerValue, values } = options;
-  const canvasWidth =
-    width === 'auto' ? values.length * defaultPixelsPerValue : width;
+  const {
+    width,
+    height,
+    defaultPixelsPerValue,
+    values,
+    type,
+    barWidth,
+    barSpacing,
+    padding,
+  } = options;
+  const isAutoWidth = width === 'auto';
+  const isBar = type === 'bar';
+  const stepWidth = isBar ? barWidth + barSpacing : defaultPixelsPerValue;
+  let canvasWidth = isAutoWidth ? values.length * stepWidth : Number(width);
   let tmp = null;
   let canvasHeight = height;
+
+  if (isBar) {
+    canvasWidth += padding * 2;
+  }
 
   if (isInit) {
     $el.innerHTML = '';
@@ -182,7 +198,6 @@ export const drawShapeCore = ({
   if (fillColor !== '') {
     context.fill();
   }
-  // console.log(shapeId, 'shapeId');
 };
 
 interface DrawCircleCoreFace {
@@ -216,13 +231,22 @@ const drawCircleCore = ({
 
   context.arc(x, y, radius, 0, 2 * Math.PI, false);
 
-  if (lineColor !== undefined) {
+  if (isString(lineColor) && lineColor !== '') {
     context.stroke();
   }
-  if (fillColor !== undefined) {
+  if (isString(fillColor) && fillColor !== '') {
     context.fill();
   }
 };
+
+// 方块的数据
+export interface RectFace {
+  startX: number;
+  startY: number;
+  height: number;
+  width: number;
+  color: string;
+}
 
 // let shapeCount = 0;
 
@@ -230,8 +254,6 @@ const genShape = (
   shapetype: string,
   params: DrawShapeCoreFace | DrawCircleCoreFace,
 ): void => {
-  // const id = shapeCount++;
-  // shapeargs.unshift(id);
   if (shapetype === 'Shape') {
     drawShapeCore(params as DrawShapeCoreFace);
   }
@@ -239,6 +261,14 @@ const genShape = (
   if (shapetype === 'Circle') {
     drawCircleCore(params as DrawCircleCoreFace);
   }
+
+  if (shapetype === 'Rect') {
+    drawShapeCore(params as DrawShapeCoreFace);
+  }
+};
+
+export const drawRect = (params: DrawShapeCoreFace): void => {
+  genShape('Rect', params);
 };
 
 export const drawShape = (params: DrawShapeCoreFace): void => {

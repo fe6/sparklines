@@ -1,6 +1,6 @@
 /** @format */
 
-import { OptionsFace, optionsDefault } from './share/ast';
+import { OptionsFace, optionsDefault, PointEnum } from './share/ast';
 import { isNumber } from './share/type';
 import {
   createCanvas,
@@ -63,8 +63,8 @@ interface AdpCanvasFace extends CalculateanvasSizeFace {
   canvasTop: number;
   canvasLeft: number;
 }
-// 适配 canvas 的大小和位置
-const adaptationCanvas = (
+// 获取 canvas 的大小和位置
+const getCanvas = (
   $el: any,
   options: OptionsFace,
   yValues: number[],
@@ -73,6 +73,7 @@ const adaptationCanvas = (
 ): AdpCanvasFace => {
   let { canvasWidth, canvasHeight } = calculateanvasSize($el, options);
   let { spotRadius } = options;
+  const { padding } = options;
   const yValLast = yValues.length - 1;
   let canvasTop = 0;
   let canvasLeft = 0;
@@ -101,23 +102,23 @@ const adaptationCanvas = (
       minSpotColor ||
       (spotColor && yValues[yValLast] === minY)
     ) {
-      canvasHeight -= Math.ceil(spotRadius);
+      canvasHeight -= Math.ceil(spotRadius) + padding;
     }
     if (
       hlSpotsEnabled ||
       maxSpotColor ||
       (spotColor && yValues[yValLast] === maxY)
     ) {
-      canvasHeight -= Math.ceil(spotRadius);
-      canvasTop += Math.ceil(spotRadius);
+      canvasHeight -= Math.ceil(spotRadius) + padding;
+      canvasTop += Math.ceil(spotRadius) + padding;
     }
     if (
       hlSpotsEnabled ||
       ((minSpotColor || maxSpotColor) &&
         (yValues[0] === minY || yValues[0] === maxY))
     ) {
-      canvasLeft += Math.ceil(spotRadius);
-      canvasWidth -= Math.ceil(spotRadius);
+      canvasLeft += padding; // 左边的间距
+      canvasWidth -= Math.ceil(spotRadius) + padding;
     }
     if (
       hlSpotsEnabled ||
@@ -126,8 +127,13 @@ const adaptationCanvas = (
       (maxSpotColor &&
         (yValues[yValLast] === minY || yValues[yValLast] === maxY))
     ) {
-      canvasWidth -= Math.ceil(spotRadius);
+      canvasWidth -= Math.ceil(spotRadius) + padding;
     }
+  } else {
+    canvasWidth -= padding * 2;
+    canvasHeight -= padding * 2;
+    canvasLeft += padding;
+    canvasTop += padding;
   }
 
   return {
@@ -238,7 +244,10 @@ const getShapes = (
   paths.forEach((path: number[][]) => {
     if (path.length) {
       if (fillColor) {
-        path.push([path[path.length - 1][0], canvasTop + canvasHeight]);
+        path.push([
+          path[path.length - 1][PointEnum.START_POINT],
+          canvasTop + canvasHeight,
+        ]);
         fillShapes.push(path.slice(0));
         path.pop();
       }
@@ -246,7 +255,10 @@ const getShapes = (
       // as a vertical line which means we keep path[0]  as is
       if (path.length > 2) {
         // else we want the first value
-        path[0] = [path[0][0], path[1][1]];
+        path[0] = [
+          path[0][PointEnum.START_POINT],
+          path[1][PointEnum.END_POINT],
+        ];
       }
       lineShapes.push(path);
     }
@@ -430,7 +442,7 @@ const render = (
     return;
   }
 
-  const { canvasWidth, canvasHeight, canvasLeft, canvasTop } = adaptationCanvas(
+  const { canvasWidth, canvasHeight, canvasLeft, canvasTop } = getCanvas(
     $el,
     options,
     yValues,

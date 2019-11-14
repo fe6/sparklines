@@ -11,6 +11,8 @@ export interface OptionsFace extends StyleFace {
   height: string;
   type: string;
   values: number[];
+  padding: number;
+  disableInteraction: boolean;
   defaultPixelsPerValue: number;
   spotRadius: number;
   spotColor: string;
@@ -18,7 +20,12 @@ export interface OptionsFace extends StyleFace {
   highlightLineColor: string;
   minSpotColor: string;
   maxSpotColor: string;
-  disableInteraction: boolean;
+  barColor: string;
+  negBarColor: string;
+  barWidth: number;
+  barSpacing: number;
+  zeroColor: string;
+  zeroAxis: boolean;
 }
 
 export const styleDefault: StyleFace = {
@@ -32,15 +39,26 @@ export const optionsDefault: OptionsFace = {
   width: 'auto',
   height: 'auto',
   type: 'line',
-  defaultPixelsPerValue: 3,
   values: [],
+  disableInteraction: false,
+  padding: 0, // 间距
+  // line params start
+  defaultPixelsPerValue: 3,
   spotRadius: 1.5, // 线的点的半径
   spotColor: '#f80',
   highlightSpotColor: '#5f5',
   highlightLineColor: '#f22',
-  disableInteraction: false,
   minSpotColor: '#f80',
   maxSpotColor: '#f80',
+  // line params end
+  // bar params start
+  barColor: '#ff4949',
+  negBarColor: '#4cbd63',
+  barWidth: 4,
+  barSpacing: 1,
+  zeroColor: '#ccc',
+  zeroAxis: true,
+  // bar params end
   ...styleDefault,
 };
 
