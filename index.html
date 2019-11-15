@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>现场开发</title>
+</head>
+<body style="padding: 32px">
+  <h1>sparklines.js 文档</h1>
+  <p><code>sparklines.js</code> 是用 TypeScript 开发的迷你图。</p>
+  <h3>折线图</h3>
+  <div
+    id="line"
+    class="common"
+  >line loading</div>
+  <h5>HTML</h5>
+  <pre>
+&lt;div id="line" &gt;line loading&lt;/div&gt;
+  </pre>
+  <h5>JavaScript</h5>
+  <pre>
+sparklines(document.getElementById('line'), {
+  values: [5, 6, 7, 9, 9, 5, 3, 2, 2, 4, -6, 7],
+});
+  </pre>
+  <hr>
+  <div
+    id="bar"
+    class="common"
+  >bar loading</div>
+  <h5>HTML</h5>
+  <pre>
+&lt;div id="bar" &gt;bar loading&lt;/div&gt;
+  </pre>
+  <h5>JavaScript</h5>
+  <pre>
+sparklines(document.getElementById('bar'), {
+  values: [5, 6, 7, 9, 9, 5, 3, 2, 2, 4, -6, 7],
+  type: 'bar'
+});
+  </pre>
+  <hr>
+  <div
+    id="pie"
+    class="common"
+  >pie loading</div>
+  <h5>HTML</h5>
+  <pre>
+&lt;div id="pie" &gt;pie loading&lt;/div&gt;
+  </pre>
+  <h5>JavaScript</h5>
+  <pre>
+sparklines(document.getElementById('pie'), {
+  values: [5, 6, 7, 9, 9, 5, 3, 2, 2, 4, -6, 7],
+  type: 'pie'
+});
+  </pre>
+  <hr>
+  <h3>点击按钮重绘图表</h3>
+  <div
+    id="changeline"
+    class="common"
+  >line loading</div>
+  <h5>HTML</h5>
+  <pre>
+&lt;div id="line" &gt;line loading&lt;/div&gt;
+  </pre>
+  <h5>JavaScript</h5>
+  <pre>
+const changelineEl = document.getElementById('changeline');
+const changeline = sparklines(changelineEl, {
+  values: [  2, 4, -6, 7],
+});
+var linebtn = document.getElementById('linebtn');
+linebtn.onclick = () => {
+  const { render } = changeline;
+  render(changelineEl, {
+    values: [5, 6, 7, 9, 7],
+    type: 'pie'
+  });
+};
+  </pre>
+  <button id="linebtn">点击改变图表</button>
+  <script>
+    var script = document.createElement('script');
+    script.src = 'dist/sparklines.js?v=' + Math.random();
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      const lineEl = document.getElementById('line');
+      const line = sparklines(lineEl, {
+        // values: [1111115, -111116, 1231237, 9, 2345325, 5, 3, 2, 2345232, 4, -6, 7],
+        values: [5, 6, 7, 9, 9, 5, 3, 2, 2, 4, -6, 7],
+      });
+      sparklines(document.getElementById('bar'), {
+        // values: [1111115, -111116, 1231237, 9, 2345325, 5, 3, 2, 2345232, 4, -6, 7],
+        // values: [0,0],
+        values: [5, 6, 7, 9, 0, 5, 3, 2, 2, 4, -6, 7],
+        // values: [5, 6, 7, 9, 9, 5, 3, 2, 2, 4, -6, 7],
+        type: 'bar'
+      });
+      sparklines(document.getElementById('pie'), {
+        values: [5, 6, 7, 9, 9, 5, 3, 2, 2, 4, -6, 7],
+        type: 'pie'
+      });
+      
+      const changelineEl = document.getElementById('changeline');
+      const changeline = sparklines(changelineEl, {
+        values: [  2, 4, -6, 7],
+      });
+      var linebtn = document.getElementById('linebtn');
+      linebtn.onclick = () => {
+        const { render } = changeline;
+        render(changelineEl, {
+          values: [5, 6, 7, 9, 7],
+          type: 'pie'
+        });
+      };
+    }
+  </script>
+</body>
+</html>
