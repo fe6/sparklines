@@ -6,6 +6,7 @@ import {
   // TypeEnum,
   CoreReturnFace,
 } from './share/ast';
+import { cloneDeep } from './share/util';
 import line from './chart/line';
 import bar from './chart/bar';
 import pie from './chart/pie';
@@ -20,7 +21,7 @@ const sparklines = (
   $el: Element,
   options: OptionsFace = optionsDefault,
 ): CoreReturnFace => {
-  const opts: OptionsFace = Object.assign(optionsDefault, options);
+  const opts: OptionsFace = cloneDeep(optionsDefault, options);
 
   const { type } = opts;
 
@@ -32,10 +33,7 @@ const sparklines = (
       $renderEl: Element,
       renderOptions: OptionsFace = optionsDefault,
     ): void => {
-      const optionsNew: OptionsFace = Object.assign(
-        optionsDefault,
-        renderOptions,
-      );
+      const optionsNew: OptionsFace = cloneDeep(optionsDefault, renderOptions);
       (charts[optionsNew.type] as Function)($renderEl, optionsNew);
     },
   };

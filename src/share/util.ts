@@ -1,7 +1,8 @@
 /**
  * @format
  */
-import { isFunction, isNumber } from './type';
+import { isFunction, isArray, isNumber } from './type';
+import { hasOwn, keys } from './o';
 
 // 转换成数字
 export const toNumber = (val: string | number): string | number => {
@@ -42,4 +43,22 @@ export const getStyle = (ele: any): StyleFace => {
     style = ele.currentStyle;
   }
   return style;
+};
+
+// 深度克隆
+export const cloneDeep = (obj1: any, obj2: any): any => {
+  const newObj: any = {};
+  keys(obj1).forEach((obj1Key: any) => {
+    if (hasOwn(obj2, obj1Key)) {
+      if (isArray(obj2[obj1Key])) {
+        newObj[obj1Key] = obj2[obj1Key].slice();
+      } else {
+        newObj[obj1Key] = obj2[obj1Key];
+      }
+    } else {
+      newObj[obj1Key] = obj1[obj1Key];
+    }
+  });
+
+  return newObj;
 };

@@ -6,10 +6,12 @@
   "license": "MIT",
   "author": "李梦龙",
   "scripts": {
-    "start": "rollup -wc rollup.config.js",
+    "start": "rollup -wc rollup.config.js --environment NODE_ENV:dev",
     "eslint": "eslint --ext .tsx,.ts --fix ./src",
     "prettier": "prettier --parser=typescript \"src/*.ts\" --write",
-    "build": "rm -rf dist && rollup -c rollup.config.js --environment NODE_ENV:production"
+    "build": "rm -rf dist && rollup -c rollup.config.js --environment NODE_ENV:production",
+    "build:site": "rm -rf dist && rollup -c rollup.config.js --environment NODE_ENV:site",
+    "site": "yarn build:site && bash scripts/deploy-gh.sh"
   },
   "gitHooks": {
     "pre-commit": "lint-staged",
