@@ -1,8 +1,13 @@
 /** @format */
 
-import { OptionsFace, optionsDefault } from './share/ast';
-import { isNumber } from './share/type';
-import { createCanvas, calculateanvasSize, RectFace, drawRect } from './canvas';
+import { OptionsFace, optionsDefault } from '../share/ast';
+import { isNumber } from '../share/type';
+import {
+  createCanvas,
+  calculateanvasSize,
+  RectFace,
+  drawRect,
+} from '../share/canvas';
 
 interface ScanValuesFace {
   numValues: number[];

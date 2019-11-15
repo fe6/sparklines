@@ -26,6 +26,10 @@ export interface OptionsFace extends StyleFace {
   barSpacing: number;
   zeroColor: string;
   zeroAxis: boolean;
+  offset: number;
+  sliceColors: string[];
+  borderWidth: number;
+  borderColor: string;
 }
 
 export const styleDefault: StyleFace = {
@@ -59,13 +63,35 @@ export const optionsDefault: OptionsFace = {
   zeroColor: '#ccc',
   zeroAxis: true,
   // bar params end
+  // pie params start
+  offset: 0,
+  sliceColors: [
+    '#3366cc',
+    '#dc3912',
+    '#ff9900',
+    '#109618',
+    '#66aa00',
+    '#dd4477',
+    '#0099c6',
+    '#990099',
+  ],
+  borderWidth: 0,
+  borderColor: '#000',
+  // pie params end
   ...styleDefault,
 };
 
 // 线的参数
 export const lineOptionsDefault = {};
 
+// 点
 export enum PointEnum {
   START_POINT,
   END_POINT,
+}
+
+export enum TypeEnum {
+  LINE = 'line',
+  BAR = 'bar',
+  PIE = 'pie',
 }

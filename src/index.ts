@@ -1,6 +1,6 @@
 /** @format */
 
-import { createCanvas, getContext } from './canvas';
+import { createCanvas, getContext } from './share/canvas';
 import sparklines from './core';
 
 export { createCanvas, getContext };

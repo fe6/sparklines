@@ -1,13 +1,14 @@
 /** @format */
-import { isString } from './share/type';
+import { isString } from './type';
 import {
   OptionsFace,
   optionsDefault,
   StyleFace,
   styleDefault,
   PointEnum,
-} from './share/ast';
-import { css } from './share/dom';
+  TypeEnum,
+} from './ast';
+import { css } from './dom';
 
 export interface CalculateanvasSizeFace {
   canvasWidth: number;
@@ -31,7 +32,8 @@ export const calculateanvasSize = (
     padding,
   } = options;
   const isAutoWidth = width === 'auto';
-  const isBar = type === 'bar';
+  const isBar = type === TypeEnum.BAR;
+  const isPie = type === TypeEnum.PIE;
   const stepWidth = isBar ? barWidth + barSpacing : defaultPixelsPerValue;
   let canvasWidth = isAutoWidth ? values.length * stepWidth : Number(width);
   let tmp = null;
@@ -57,6 +59,10 @@ export const calculateanvasSize = (
     canvasHeight = css(tmp, 'height') as string;
     $el.removeChild(tmp);
     tmp = null;
+  }
+
+  if (isPie) {
+    canvasWidth = parseFloat(canvasHeight);
   }
 
   return {
@@ -239,6 +245,48 @@ const drawCircleCore = ({
   }
 };
 
+interface DrawPieSliceCoreFace {
+  canvas: any;
+  x: number;
+  y: number;
+  radius: number;
+  startAngle: number;
+  endAngle: number;
+  lineColor: string;
+  fillColor: string;
+}
+
+// 饼
+export const drawPieSliceCore = ({
+  canvas,
+  x,
+  y,
+  radius,
+  startAngle,
+  endAngle,
+  lineColor,
+  fillColor,
+}: DrawPieSliceCoreFace): void => {
+  const context = getContext(canvas, {
+    lineColor,
+    fillColor,
+    lineWidth: 1,
+  });
+
+  context.beginPath();
+  context.moveTo(x, y);
+  context.arc(x, y, radius, startAngle, endAngle, false);
+  context.lineTo(x, y);
+  context.closePath();
+
+  if (isString(lineColor) && lineColor !== '') {
+    context.stroke();
+  }
+  if (isString(fillColor) && fillColor !== '') {
+    context.fill();
+  }
+};
+
 // 方块的数据
 export interface RectFace {
   startX: number;
@@ -252,7 +300,7 @@ export interface RectFace {
 
 const genShape = (
   shapetype: string,
-  params: DrawShapeCoreFace | DrawCircleCoreFace,
+  params: DrawShapeCoreFace | DrawCircleCoreFace | DrawPieSliceCoreFace,
 ): void => {
   if (shapetype === 'Shape') {
     drawShapeCore(params as DrawShapeCoreFace);
@@ -264,6 +312,10 @@ const genShape = (
 
   if (shapetype === 'Rect') {
     drawShapeCore(params as DrawShapeCoreFace);
+  }
+
+  if (shapetype === 'PieSlice') {
+    drawPieSliceCore(params as DrawPieSliceCoreFace);
   }
 };
 
@@ -277,4 +329,8 @@ export const drawShape = (params: DrawShapeCoreFace): void => {
 
 export const drawCircle = (params: DrawCircleCoreFace): void => {
   genShape('Circle', params);
+};
+
+export const drawPieSlice = (params: DrawPieSliceCoreFace): void => {
+  genShape('PieSlice', params);
 };
