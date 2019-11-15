@@ -1,8 +1,9 @@
 /** @format */
 
-import { OptionsFace, optionsDefault } from './share/ast';
-import line from './line';
-import bar from './bar';
+import { OptionsFace, optionsDefault, TypeEnum } from './share/ast';
+import line from './chart/line';
+import bar from './chart/bar';
+import pie from './chart/pie';
 
 const sparklines = (
   $el: Element,
@@ -12,12 +13,16 @@ const sparklines = (
 
   const { type } = opts;
 
-  if (type === 'line') {
+  if (type === TypeEnum.LINE) {
     line($el, opts);
   }
 
-  if (type === 'bar') {
+  if (type === TypeEnum.BAR) {
     bar($el, opts);
+  }
+
+  if (type === TypeEnum.PIE) {
+    pie($el, opts);
   }
 };
 

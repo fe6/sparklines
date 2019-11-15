@@ -1,14 +1,14 @@
 /** @format */
 
-import { OptionsFace, optionsDefault, PointEnum } from './share/ast';
-import { isNumber } from './share/type';
+import { OptionsFace, optionsDefault, PointEnum } from '../share/ast';
+import { isNumber } from '../share/type';
 import {
   createCanvas,
   calculateanvasSize,
   CalculateanvasSizeFace,
   drawShape,
   drawCircle,
-} from './canvas';
+} from '../share/canvas';
 
 interface SCanValuesFace {
   xValues: number[];
