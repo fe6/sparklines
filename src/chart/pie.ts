@@ -1,6 +1,6 @@
 /** @format */
 
-import { OptionsFace, optionsDefault } from '../share/ast';
+import { OptionsFace, optionsDefault, CoreReturnFace } from '../share/ast';
 import { isNumber, isString } from '../share/type';
 import {
   createCanvas,
@@ -41,7 +41,7 @@ const drawPiesSlice = (
         y: radius + padding * 2,
         radius: radius - borderWidth,
         startAngle: start,
-        endAngle: end,
+        endAngle: Math.ceil(end),
         lineColor: '',
         fillColor: color,
       });
@@ -50,8 +50,10 @@ const drawPiesSlice = (
   });
 };
 
-const render = (canvas: any, options: OptionsFace, radius: number): void => {
+const render = ($el: any, canvas: any, options: OptionsFace): void => {
   const { borderWidth, borderColor, values, padding } = options;
+  const { canvasWidth, canvasHeight } = calculateanvasSize($el, options);
+  const radius = Math.floor(Math.min(canvasWidth, canvasHeight) / 2);
   const newRadius = radius - padding * 2;
 
   // 画边框
@@ -74,9 +76,15 @@ const render = (canvas: any, options: OptionsFace, radius: number): void => {
   }
 };
 
-export default ($el: Element, options: OptionsFace = optionsDefault): void => {
+export default (
+  $el: Element,
+  options: OptionsFace = optionsDefault,
+): CoreReturnFace => {
   const canvas = createCanvas($el, options);
-  const { canvasWidth, canvasHeight } = calculateanvasSize($el, options);
-  const radius = Math.floor(Math.min(canvasWidth, canvasHeight) / 2);
-  render(canvas, options, radius);
+  render($el, canvas, options);
+
+  return {
+    canvas,
+    render,
+  };
 };

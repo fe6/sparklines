@@ -20,13 +20,15 @@
     id="pie"
     class="common"
   >pie loading</div>
+  <button id="linebtn">边线</button>
   <script>
     var script = document.createElement('script');
     script.src = '../dist/sparklines.js?v=' + Math.random();
     document.body.appendChild(script);
 
     script.onload = () => {
-      sparklines(document.getElementById('lines'), {
+      const lineEl = document.getElementById('lines');
+      const line = sparklines(lineEl, {
         // values: [1111115, -111116, 1231237, 9, 2345325, 5, 3, 2, 2345232, 4, -6, 7],
         values: [5, 6, 7, 9, 9, 5, 3, 2, 2, 4, -6, 7],
       });
@@ -41,6 +43,16 @@
         values: [5, 6, 7, 9, 9, 5, 3, 2, 2, 4, -6, 7],
         type: 'pie'
       });
+
+      var linebtn = document.getElementById('linebtn');
+      linebtn.onclick = () => {
+        const { render } = line;
+        render(lineEl, {
+          lineColor: '#f00',
+          values: [5, 6, 7, 9, 7],
+          type: 'pie'
+        });
+      };
     }
   </script>
   <style>
