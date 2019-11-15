@@ -1,6 +1,6 @@
 /** @format */
 
-import { OptionsFace, optionsDefault } from '../share/ast';
+import { OptionsFace, optionsDefault, CoreReturnFace } from '../share/ast';
 import { isNumber } from '../share/type';
 import {
   createCanvas,
@@ -175,7 +175,15 @@ const render = ($el: any, canvas: any, options: OptionsFace): void => {
   drawBars(canvas, bars);
 };
 
-export default ($el: Element, options: OptionsFace = optionsDefault): void => {
+export default (
+  $el: Element,
+  options: OptionsFace = optionsDefault,
+): CoreReturnFace => {
   const canvas = createCanvas($el, options);
   render($el, canvas, options);
+
+  return {
+    canvas,
+    render,
+  };
 };
