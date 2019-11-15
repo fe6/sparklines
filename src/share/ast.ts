@@ -33,8 +33,8 @@ export interface OptionsFace extends StyleFace {
 }
 
 export const styleDefault: StyleFace = {
-  lineColor: '#00f',
-  fillColor: '#cdf',
+  lineColor: '#096dd9',
+  fillColor: '#bae7ff',
   lineWidth: 1,
 };
 
@@ -48,32 +48,36 @@ export const optionsDefault: OptionsFace = {
   padding: 0, // 间距
   // line params start
   defaultPixelsPerValue: 3,
-  spotRadius: 1.5, // 线的点的半径
-  spotColor: '#f80',
+  spotRadius: 1, // 线的点的半径
+  spotColor: '#f5222d',
   highlightSpotColor: '#5f5',
   highlightLineColor: '#f22',
-  minSpotColor: '#f80',
-  maxSpotColor: '#f80',
+  minSpotColor: '#f5222d',
+  maxSpotColor: '#f5222d',
   // line params end
   // bar params start
-  barColor: '#ff4949',
-  negBarColor: '#4cbd63',
+  barColor: '#f5222d',
+  negBarColor: '#52c41a',
   barWidth: 4,
   barSpacing: 1,
-  zeroColor: '#ccc',
+  zeroColor: '#bfbfbf',
   zeroAxis: true,
   // bar params end
   // pie params start
   offset: 0,
   sliceColors: [
-    '#3366cc',
-    '#dc3912',
-    '#ff9900',
-    '#109618',
-    '#66aa00',
-    '#dd4477',
-    '#0099c6',
-    '#990099',
+    '#fa8c16', // 日暮
+    '#a0d911', // 青柠
+    '#eb2f96', // 法式洋红
+    '#1890ff', // 佛晓蓝
+    '#f5222d', // 薄暮
+    '#faad14', // 金盏花
+    '#52c41a', // 极光绿
+    '#2f54eb', // 极客蓝
+    '#fa541c', // 火山
+    '#fadb14', // 日出
+    '#13c2c2', // 明青
+    '#722ed1', // 酱紫
   ],
   borderWidth: 0,
   borderColor: '#000',
@@ -81,8 +85,10 @@ export const optionsDefault: OptionsFace = {
   ...styleDefault,
 };
 
-// 线的参数
-export const lineOptionsDefault = {};
+export interface CoreReturnFace {
+  canvas: any;
+  render: Function;
+}
 
 // 点
 export enum PointEnum {

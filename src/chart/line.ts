@@ -1,6 +1,11 @@
 /** @format */
 
-import { OptionsFace, optionsDefault, PointEnum } from '../share/ast';
+import {
+  OptionsFace,
+  optionsDefault,
+  PointEnum,
+  CoreReturnFace,
+} from '../share/ast';
 import { isNumber } from '../share/type';
 import {
   createCanvas,
@@ -408,12 +413,17 @@ const minMaxValueTag = ({
   }
 };
 
-const render = (
-  $el: Element,
-  canvas: any,
-  values: number[],
-  options: OptionsFace,
-): void => {
+const render = ($el: Element, canvas: any, options: OptionsFace): void => {
+  const {
+    lineColor,
+    fillColor,
+    lineWidth,
+    spotRadius,
+    spotColor,
+    maxSpotColor,
+    minSpotColor,
+    values,
+  } = options;
   const {
     xValues,
     yValues,
@@ -425,15 +435,6 @@ const render = (
     minYOrg,
     maxYOrg,
   } = scanValues(values);
-  const {
-    lineColor,
-    fillColor,
-    lineWidth,
-    spotRadius,
-    spotColor,
-    maxSpotColor,
-    minSpotColor,
-  } = options;
   const rangeX = maxX - minX === 0 ? 1 : maxX - minX;
   const rangeY = maxY - minY === 0 ? 1 : maxY - minY;
 
@@ -513,9 +514,15 @@ const render = (
   });
 };
 
-export default ($el: Element, options: OptionsFace = optionsDefault): void => {
+export default (
+  $el: Element,
+  options: OptionsFace = optionsDefault,
+): CoreReturnFace => {
   const canvas: Element = createCanvas($el, options);
-  const { values } = options;
+  render($el, canvas, options);
 
-  render($el, canvas, values, options);
+  return {
+    canvas,
+    render,
+  };
 };
