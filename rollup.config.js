@@ -27,7 +27,11 @@ const output = () => {
   const outputList = [];
 
   formats.reduce((acc, format) => {
-    const file = isMin => `dist/${lineName}${isMin ? '.min' : ''}.js`;
+    const prefix =
+      process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'site'
+        ? 'demo/'
+        : '';
+    const file = isMin => `${prefix}dist/${lineName}${isMin ? '.min' : ''}.js`;
     const moduleName = lineName.charAt(0).toUpperCase() + lineName.slice(1);
 
     const base = {
